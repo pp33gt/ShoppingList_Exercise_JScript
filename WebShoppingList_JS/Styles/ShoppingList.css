@@ -1,0 +1,39 @@
+﻿#shoppingList {
+    border: 1px solid red;
+    border-radius: 5px;
+    list-style: none;
+    padding: 0;
+    max-width: 25rem;
+}
+
+    #shoppingList > li + li {
+        border-top: 1px solid #ccc;
+    }
+
+    #shoppingList > li {
+        padding-left: 1.5rem;
+        position: relative;
+        line-height: 1.6rem;
+    }
+
+        #shoppingList > li.completed {
+            text-decoration: line-through;
+        }
+
+            #shoppingList > li.completed:before {
+                position: absolute;
+                content: "\2714";
+                color: green;
+                left: .4rem;
+            }
+
+button.remove {
+    display: none;
+    position: absolute;
+    right: .5rem;
+    top: .15rem;
+}
+
+li.completed button.remove {
+    display: inline;
+}

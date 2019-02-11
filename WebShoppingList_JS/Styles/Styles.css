@@ -1,0 +1,87 @@
+﻿body {
+    background-color: black;
+    font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+    font-style: normal;
+    color: burlywood;
+}
+
+.navigation ul {
+    list-style-type: none; 
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333333;
+}
+
+.navigation li {
+    float: left;
+}
+
+    .navigation li a {
+        display: block;
+        color: white;
+        text-align: center;
+        padding: 16px;
+        text-decoration: none;
+    }
+
+        .navigation li a:hover {
+            background-color: #111111;
+        }
+
+.center {
+    text-align: center;
+}
+
+.relatedlinks ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+.relatedlinks li {
+    float: left;
+}
+
+    .relatedlinks li a {
+        display: block;
+        color: gold;
+        text-align: center;
+        padding: 16px;
+        text-decoration: none;
+    }
+
+        .relatedlinks li a:hover {
+            background-color: #111111;
+        }
+
+.footer {
+    height: 50px;
+    background-color: #333333;
+}
+
+.column {
+    float: left;
+    /*width: 33.33%;*/
+    width: 100px;
+}
+
+.column_middle {
+    float: left;
+    /*width: 33.33%;*/
+    width: 150px;
+}
+
+/* Clear floats after the columns */
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.input_control {
+    width: 100px;
+}
+
+

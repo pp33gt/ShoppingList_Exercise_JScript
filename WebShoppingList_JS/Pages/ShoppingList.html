@@ -1,0 +1,108 @@
+﻿<html>
+<head>
+    <title>ShoppingList</title>
+    <meta charset="UTF-8">
+    <meta name="author" content="Peter B">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="../Styles/Styles.css" rel="stylesheet" />
+    <link href="../Styles/ShoppingList.css" rel="stylesheet" />
+</head>
+<body>
+    <header>
+        <nav class="navigation">
+            <ul>
+                <li><a class="navlink" href="../Pages/Index.html">Index</a></li>
+                <li><a class="navlink" href="../Pages/ShoppingList.html">ShoppingList</a></li>
+            </ul>
+        </nav>
+        <h1>Shopping Lista</h1>
+    </header>
+
+   
+
+    <section>
+        <div class="row">
+            <div class="column">
+                <div>Välj:</div>
+            </div>
+            <div class="column_middle">
+                <select id="dropDownShoppingLists" class="input_control"></select>
+            </div>
+            <div class="column">
+                <input type="button" value="Ta bort" id="btnRemoveShoppingList" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="column">
+                <p></p>
+            </div>
+            <div class="column_middle">
+                <p></p>
+            </div>
+            <div class="column">
+                <p></p>
+            </div>
+        </div>
+    </section>
+    <section>
+        <div style="float:unset">
+            <ul class="ddd" id="shoppingList"></ul>
+        </div>
+        <div class="row">
+            <div class="column">
+                <div>Att köpa:</div>
+            </div>
+            <div class="column_middle">
+                <input type="text" id="txtNewItem" class="input_control" />
+            </div>
+            <div class="column">
+                <input type="button" value="Lägg till" id="btnAdd" />
+            </div>
+
+            <div class="column">
+                <div>&nbsp;</div>
+            </div>
+            <div class="column">
+                <div>Namn:</div>
+            </div>
+            <div class="column_middle">
+                <input type="text" value="" id="txtShoppingListName" class="input_control" />
+            </div>
+            <div class="column">
+                <input type="button" value="Spara" id="btnSaveShoppingList" />
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="row">
+            <div class="column">
+                <p></p>
+            </div>
+            <div class="column_middle">
+                <p></p>
+            </div>
+            <div class="column">
+                <p></p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="column">
+                <p></p>
+            </div>
+            <div class="column_middle">
+                <p></p>
+            </div>
+            <div class="column">
+                <input type="button" value="Ta bort alla shoppinglistor" id="btnClearWebStorage" />
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        &copy; Webmaster
+    </footer>
+    <script src="../Scripts/ShoppingList.js"></script>
+</body>
+</html>
