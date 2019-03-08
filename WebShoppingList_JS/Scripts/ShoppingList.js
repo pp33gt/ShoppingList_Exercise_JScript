@@ -90,6 +90,21 @@
             inmemoryItems = inmemoryItems.concat(tmpItems);
             return;
         }
+
+        var wsItemsJson = webStorageInUse.getItem(storageKey);
+        var wsItems = JSON.parse(wsItemsJson);
+        wsItems = editOrCreateItems(wsItems, listName, shoppingItems);
+        var resultItemsJson = JSON.stringify(wsItems);
+        webStorageInUse.setItem(storageKey, resultItemsJson);
+    };
+
+    shoppingListsStorage.setItem2 = function (listName, shoppingItems) {
+
+        if (webStorageInUse === null) {
+            var tmpItems = editOrCreateItems(inmemoryItems, listName, shoppingItems);
+            inmemoryItems = inmemoryItems.concat(tmpItems);
+            return;
+        }
         
         var wsItemsJson = webStorageInUse.getItem(storageKey);
         var wsItems = JSON.parse(wsItemsJson);
@@ -102,7 +117,22 @@
         newitems.forEach((item) => { shoppingListsStorage.setItem(item.name, item.items); });
     };
 
+    shoppingListsStorage.logAllShoppingListsToConsole = function() {
+        logAllShoppingListsToConsole();
+    }
+
+
     //Private Methods
+    function logAllShoppingListsToConsole() {
+        var wsItems = shoppingListsStorage.getItems();
+        wsItems.forEach((shoppingList) => {
+            console.log('shoppingList:' + shoppingList.name);
+            shoppingList.items.forEach((item) => {
+                console.log('item:' + item.name);
+            });
+        });
+    }
+
     function removeShoppingList(shoppingLists, key) {
         var tmpShoppingLists = [];
         shoppingLists.forEach((item) => { if (item.name !== key) { tmpShoppingLists.push(item); } });
@@ -243,13 +273,34 @@
     main.onBtnAddItem = function () {
         var newItem = txtNewItem.value;
 
-        if (newItem.length > 0) {
-            main.addShoppingItem(newItem);
-        }
+        //if (newItem.length > 0) {
+        //    main.addShoppingItem(newItem);
+        //}
+
+        /***/
+        var selectedShoppingList = dropdown.getSelected(dropDownShoppingLists);
+        var items = main.getShoppingListItems(selectedShoppingList.value);
+        items.push({ name: newItem });
+        shoppingListsStorage.setItem(selectedShoppingList.value, items);
+        shoppingListsStorage.logAllShoppingListsToConsole();
+
+        main.onChangeShoppingList();
     };
 
     main.onRemoveItem = function (li) {
-        li.remove();
+        //li.remove();
+        var liInnerText = li.innerHTML;
+        var fragsLiInnerText = liInnerText.split("<button");
+        var itemName = fragsLiInnerText[0];
+
+        var selectedShoppingList = dropdown.getSelected(dropDownShoppingLists);
+        var items = main.getShoppingListItems(selectedShoppingList.value);
+        var newItems = [];
+        items.forEach((item) => { if (item.name != itemName) { newItems.push(item); } });
+        shoppingListsStorage.setItem2(selectedShoppingList.value, newItems);
+        shoppingListsStorage.logAllShoppingListsToConsole();
+        main.onChangeShoppingList();
+
         main.syncBtnCreate();
     };
 
@@ -292,6 +343,10 @@
         }
         return res;
     };
+
+    main.onChangeShoppingList = function () {
+        main.onChangeShoppingList();
+    }
 
     main.onChangeShoppingList = function (evt) {
         var selected = dropdown.getSelected(dropDownShoppingLists);
