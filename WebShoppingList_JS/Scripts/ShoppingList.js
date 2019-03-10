@@ -86,26 +86,12 @@
     shoppingListsStorage.setItem = function (listName, shoppingItems) {
 
         if (webStorageInUse === null) {
-            var tmpItems = editOrCreateItems(shoppingListsStorage.items, listName, shoppingItems);
+            var clonedItems = inmemoryItems.splice(0);
+            var tmpItems = editOrCreateItems(clonedItems, listName, shoppingItems);
             inmemoryItems = inmemoryItems.concat(tmpItems);
             return;
         }
 
-        var wsItemsJson = webStorageInUse.getItem(storageKey);
-        var wsItems = JSON.parse(wsItemsJson);
-        wsItems = editOrCreateItems(wsItems, listName, shoppingItems);
-        var resultItemsJson = JSON.stringify(wsItems);
-        webStorageInUse.setItem(storageKey, resultItemsJson);
-    };
-
-    shoppingListsStorage.setItem2 = function (listName, shoppingItems) {
-
-        if (webStorageInUse === null) {
-            var tmpItems = editOrCreateItems(inmemoryItems, listName, shoppingItems);
-            inmemoryItems = inmemoryItems.concat(tmpItems);
-            return;
-        }
-        
         var wsItemsJson = webStorageInUse.getItem(storageKey);
         var wsItems = JSON.parse(wsItemsJson);
         wsItems = editOrCreateItems(wsItems, listName, shoppingItems);
@@ -245,8 +231,8 @@
     main.createDummys = function () {
 
         var items = [];
-        items.push({ name: 'foo', items: [{ name: 'a1' }, { name: 'a2' }] });
-        items.push({ name: 'bar', items: [{ name: 'a3' }, { name: 'a4' }] });
+        items.push({ name: 'biltema', items: [{ name: 'cykeldäck' }, { name: 'innerslang' }] });
+        items.push({ name: 'clasohlson', items: [{ name: 'lasertoner' }, { name: 'hammare' }] });
         return items;
     };
 
@@ -273,11 +259,6 @@
     main.onBtnAddItem = function () {
         var newItem = txtNewItem.value;
 
-        //if (newItem.length > 0) {
-        //    main.addShoppingItem(newItem);
-        //}
-
-        /***/
         var selectedShoppingList = dropdown.getSelected(dropDownShoppingLists);
         var items = main.getShoppingListItems(selectedShoppingList.value);
         items.push({ name: newItem });
@@ -288,7 +269,6 @@
     };
 
     main.onRemoveItem = function (li) {
-        //li.remove();
         var liInnerText = li.innerHTML;
         var fragsLiInnerText = liInnerText.split("<button");
         var itemName = fragsLiInnerText[0];
@@ -297,7 +277,7 @@
         var items = main.getShoppingListItems(selectedShoppingList.value);
         var newItems = [];
         items.forEach((item) => { if (item.name != itemName) { newItems.push(item); } });
-        shoppingListsStorage.setItem2(selectedShoppingList.value, newItems);
+        shoppingListsStorage.setItem(selectedShoppingList.value, newItems);
         shoppingListsStorage.logAllShoppingListsToConsole();
         main.onChangeShoppingList();
 
@@ -320,7 +300,7 @@
             btnRemoveShoppingList.disabled = false;
         }
 
-        if (shoppingList.childElementCount > 0 && txtShoppingListName.value.length > 0)
+        if (txtShoppingListName.value.length > 0)
         {
             btnSaveShoppingList.disabled = false;
         }
@@ -328,9 +308,9 @@
 
     main.onAddNewShoppingList = function () {
         var name = txtShoppingListName.value;
-        var newItems = main.getShoppingLiItems();
-        shoppingListsStorage.setItem(name, newItems);
+        shoppingListsStorage.setItem(name, []);
         main.initShoppingLists(name);
+        main.removeShoppingListItems(shoppingList.children);
     };
 
     main.getShoppingLiItems = function () {
@@ -338,7 +318,6 @@
         var sList = shoppingList.children;
         for (var i = sList.length - 1; i >= 0; i--) {
             var item = sList[i];
-            var contents = item.childNodes.length;
             res.push({ name: item.innerText });
         }
         return res;
